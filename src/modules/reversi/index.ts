@@ -20,6 +20,11 @@ export default class extends Module {
 	 */
 	private reversiConnection?: any;
 
+	/**
+	 * ユーザーごとのリバーシレベルを保持するマップ
+	 */
+	private userReversiStrength: Map<string, number> = new Map();
+
 	@bindThis
 	public install() {
 		if (!config.reversiEnabled) return {};
@@ -51,6 +56,25 @@ export default class extends Module {
 	@bindThis
 	private async mentionHook(msg: Message) {
 		if (msg.includes(['リバーシ', 'オセロ', 'reversi', 'othello'])) {
+			const levelMatch = msg.text.match(/\d+/);
+			if (levelMatch) {
+				const level = parseInt(levelMatch[0], 10);
+				if (level >= 0 && level <= 5) {
+					// ユーザーが言った場合はそのユーザーにのみ適用
+					this.userReversiStrength.set(msg.userId, level);
+					msg.reply(`レベル${level}ですねー 良いですよー`);
+					
+					if (config.reversiEnabled) {
+						this.ai.api('reversi/match', {
+							userId: msg.userId
+						});
+					} else {
+						msg.reply(serifs.reversi.decline);
+					}
+					return true;
+				}
+			}
+
 			if (config.reversiEnabled) {
 				msg.reply(serifs.reversi.ok);
 
@@ -66,9 +90,9 @@ export default class extends Module {
 			}
 
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	@bindThis
@@ -92,7 +116,7 @@ export default class extends Module {
 		let strength = 4;
 		const friend = this.ai.lookupFriend(game.user1Id !== this.ai.account.id ? game.user1Id : game.user2Id)!;
 		if (friend != null) {
-			strength = friend.doc.reversiStrength ?? 4;
+			strength = this.userReversiStrength.get(friend.userId) ?? friend.doc.reversiStrength ?? 4;
 			friend.updateReversiStrength(null);
 		}
 
