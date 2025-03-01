@@ -29,7 +29,9 @@ Misskey用の日本語Botです。
 	"aichatRandomTalkIntervalMinutes": "ランダムトーク間隔(分)。指定した時間ごとにタイムラインを取得し、適当に選んだ人にaichatする(1の場合1分ごと実行)。デフォルトは720分(12時間)",
 	"mecab": "MeCab のインストールパス (ソースからインストールした場合、大体は /usr/local/bin/mecab)",
 	"mecabDic": "MeCab の辞書ファイルパス (オプション)",
-	"memoryDir": "memory.jsonの保存先（オプション、デフォルトは'.'（レポジトリのルートです））"
+	"memoryDir": "memory.jsonの保存先（オプション、デフォルトは'.'（レポジトリのルートです））",
+	"vocaloidYoutubeEnabled": "ボカロ動画おすすめ機能を有効にする場合は true を入れる",
+	"youtubeApiKey": "YouTube APIキー。YouTube Music 用"
 }
 ```
 `npm install` して `npm run build` して `npm start` すれば起動できます
@@ -58,7 +60,9 @@ Misskey用の日本語Botです。
 	"aichatRandomTalkIntervalMinutes": "ランダムトーク間隔(分)。指定した時間ごとにタイムラインを取得し、適当に選んだ人にaichatする(1の場合1分ごと実行)。デフォルトは720分(12時間)",
 	"mecab": "/usr/bin/mecab",
 	"mecabDic": "/usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd/",
-	"memoryDir": "data"
+	"memoryDir": "data",
+	"vocaloidYoutubeEnabled": "ボカロ動画おすすめ機能を有効にする場合は true を入れる",
+	"youtubeApiKey": "YouTube APIキー。YouTube Music 用"
 }
 ```
 `docker-compose build` して `docker-compose up` すれば起動できます。
