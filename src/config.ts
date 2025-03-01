@@ -21,6 +21,8 @@ type Config = {
 	mecab?: string;
 	mecabDic?: string;
 	memoryDir?: string;
+	vocaloidYoutubeEnabled?: boolean;
+	youtubeApiKey?: string;
 };
 
 import config from '../config.json' with { type: 'json' };
